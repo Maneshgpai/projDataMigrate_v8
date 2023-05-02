@@ -1,0 +1,49 @@
+- Create Django app for User authentication, and move it under apps folder
+	cd app/backend/server/apps
+	./manage.py startapp user_api
+	mv user_api apps/
+
+
+-Change app/backend/server/server/settings.py:
+	# Comment allowing all, and only allow local host IP
+	# CORS_ORIGIN_ALLOW_ALL = True
+	CORS_ALLOWED_ORIGINS = [
+		'http://localhost:3000',
+		'http://127.0.0.1:3000',
+	]
+	CORS_ALLOW_CREDENTIALS = True	
+	## User model
+	AUTH_USER_MODEL = 'user_api.AppUser'
+	
+	# REST_FRAMEWORK = {
+	#     'DEFAULT_AUTHENTICATION_CLASSES': (
+	#         'rest_framework.authentication.TokenAuthentication',
+	#     ),
+	#     'DEFAULT_PERMISSION_CLASSES': [
+	#         'rest_framework.permissions.IsAuthenticated',
+	#     ],
+	# }
+	REST_FRAMEWORK = {
+		'DEFAULT_PERMISSION_CLASSES': (
+			'rest_framework.permissions.IsAuthenticated',
+		),
+		'DEFAULT_AUTHENTICATION_CLASSES': (
+			'rest_framework.authentication.SessionAuthentication',
+		),
+	}
+
+- Files changed:
+/home/john/Documents/projDataMigrate_v8/app/backend/server/apps/user_api/models.py
+/home/john/Documents/projDataMigrate_v8/app/backend/server/apps/user_api/urls.py
+/home/john/Documents/projDataMigrate_v8/app/backend/server/apps/user_api/serializers.py
+/home/john/Documents/projDataMigrate_v8/app/backend/server/apps/user_api/views.py
+/home/john/Documents/projDataMigrate_v8/app/backend/server/apps/user_api/validations.py
+cp $EXISTING_PROJ_FULL_PATH/app/backend/server/server/urls.py $PROJ_FULL_PATH/app/backend/server/server/
+
+
+
+{
+    "email": "test@example.com",
+    "username": "user_name",
+    "password": "password123"
+}
